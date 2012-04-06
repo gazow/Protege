@@ -1,0 +1,205 @@
+
+div#protege{
+	position:relative;
+	margin:0 auto;
+}
+div#lightBox{
+	position:fixed;
+	z-index:10;
+	width:100%;
+	height:100%;
+	background:black;
+	opacity: 0.95;
+	top:0;
+	left:0;
+}
+div#nullBox{
+z-index:-5;
+}
+
+
+.verticalCenter{
+position: relative;
+width:inherit;
+height:inherit;
+display: table-cell;
+vertical-align:middle;
+}
+
+a.noDecoration{
+	text-decoration:none;
+	position:relative;
+}
+/*--------------------------------------*/
+/*--------------Album Style-------------*/
+/*--------------------------------------*/
+#galleryList{
+	list-style-type: none;
+	padding:0;
+}
+
+.galleryAlbumImage{
+	vertical-align: middle;
+	border:solid #555 10px;
+	margin: 0 auto 10px auto;
+	width:540px;
+	height:96px;
+	background-color:#555;
+}
+
+.galleryAlbumImage:hover,
+.galleryAlbumImage:active{
+	cursor:pointer;
+	border-color:#888;
+}
+
+h4 {
+	margin: 0;
+	max-width:200px;
+	position:absolute;
+	display:block;
+	top:-30px;
+	left:20px;
+	padding:3px;
+	
+	text-align: left;
+	letter-spacing:-0.02em; 
+	font-weight:normal; 
+	color:#FFF;
+	background-color:#000;
+	opacity:0.8; 
+}
+
+/*--------------------------------------*/
+/*------------Gallery Table-------------*/
+/*--------------------------------------*/
+#albumTitle{
+	text-align:center;
+	margin:0 auto;
+	
+}
+#albumTitle a {
+	float:left;
+	margin: 0 auto;
+	display:block;
+	padding:3px;
+	text-align:center;
+	letter-spacing:-0.02em; 
+	font-weight:normal; 
+	color:#FFF;
+	background-color:#000;
+	opacity:0.8; 
+}
+/*--------------------------------------*/
+/*------------Gallery Stuff-------------*/
+/*--------------------------------------*/
+#pic{
+	vertical-align:middle;
+	margin:0 auto;
+}
+#imgTitle{
+	position:relative;
+	text-align:center;	
+	width:inherit;
+}
+#imgLink{
+	margin:0 auto;
+	text-decoration:none;
+}
+div#imageDiv{
+	text-align:center;
+	margin:0 auto;
+	z-index:15;
+}
+
+
+/*--------------------------------------*/
+/*-------------Arrow Style--------------*/
+/*--------------------------------------*/
+#prevThumbsArrow{
+	text-align:left;
+	float:left;
+	left:0;
+	width:inherit;
+	height:inherit;
+}
+#nextThumbsArrow{
+	text-align:right;
+	float:right;
+	right:0;
+	width:inherit;
+	height:inherit;
+}
+#prevArrow{
+	text-align:left;
+	float:left;
+	left:0;
+	padding-right:150px;
+}
+.arrow{
+	position:absolute;
+	height:inherit;
+	z-index:100;
+	opacity:0; 
+}
+#nextArrow{
+	text-align:right;
+	float:right;
+	right:0;
+}
+
+.arrow:hover,
+.arrow:active{
+	opacity:0.8; 
+}
+/*--------------------------------------*/
+/*------------Gallery Table-------------*/
+/*--------------------------------------*/
+#thumbsContainer{
+	position:relative;
+	text-align:center;
+	display:block;
+}
+
+.thumbTable{
+	margin:0 auto;
+}
+
+.thumbsRows{
+	float:left;
+	display:table;	
+}
+#bubbleContainer{
+	position:absolute;
+	margin:0 auto;
+	text-align:center;
+	left: 50%;	
+}
+#bubbleImg{
+	position:absolute;
+}
+/*--------------------------------------*/
+/*------------Gallery Table-------------*/
+/*--------------------------------------*/
+.price{
+	color:#FFF;
+}
+
+.etsyImg{
+	float:left;	
+}
+
+.etsyItemTitle {
+	margin: 0;
+	position:absolute;
+	display:block;
+	padding:3px;
+	float:left;
+	
+	text-align: left;
+	letter-spacing:-0.02em; 
+	font-weight:normal; 
+	color:#FFF;
+	background-color:#000;
+	opacity:0.8; 
+}
