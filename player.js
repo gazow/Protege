@@ -465,7 +465,10 @@ function newGallery(str, check){
 		if (customVars[i].id==str)
 			str=i;
 	}
-	$('#'+settings.containerID).empty();
+	
+	var tempSet=$.extend({},defaults,customVars[parseInt(str)]);
+	$('#'+tempSet.containerID).empty();
+	
 	$("#lightBox").remove();
 	$("#nullBox").remove();
 	tableCount=0; 
