@@ -1,1 +1,49 @@
-test
+/**
+ * Plugin: Protege Viewer
+ * 
+ * Version: 1.0
+ * (c) Copyright 2010-2011, Gazow
+ * 
+ * Description: javascript plugin for display of RSS feeds via Google Feed API
+ *   					for manipulation into gallery style format
+ *
+ **/
+
+
+
+
+Usage: 
+
+-----------------Scripts Required in the header
+
+
+***Google Jquery Library
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+
+<script src="https://raw.github.com/tkyk/jquery-history-plugin/master/jquery.history.js" type="text/javascript"></script> 
+<script src="https://raw.github.com/gazow/Protege/master/player.js" type="text/javascript"></script> 
+<link rel="stylesheet" type="text/css" href="https://raw.github.com/gazow/Protege/master/gallery.css" /> 
+
+
+
+***The Custom Variable Script
+***this will be a local file to add individual albums to the viewer
+
+<script src="albumlist.js" type="text/javascript"></script>
+
+
+
+
+
+-----------------Elements Required to display
+*** Div the application will add the gallery viewer too, place this somewhere in the body
+
+<div id='protege'></div>
+    
+
+
+-----------------Scripts Required to Run
+***Place this in the body somewhere after the album div from above
+
+<script type="text/javascript">$(document).ready(function(){gallery('0')});</script>
