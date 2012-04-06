@@ -1,5 +1,5 @@
 /**
- * Plugin: VICI Viewer
+ * Plugin: Protege Viewer
  * 
  * Version: 1.0
  * (c) Copyright 2010-2011, Gazow
@@ -14,7 +14,7 @@
 	id				: 'gallery',			// Title of each gallery
 	display		  	: "gallery" ,			// type of album display- options: gallery, list, block
 	containerID  	: "protege" ,			// id of element to append gallery to ex: <div id = 'protege'>	
-	network  		: "facebook" ,			// source of photo album- options: facebook, picasa, deviantArt, etsy, flikr 
+	network  		: "default" ,			// source of photo album- options: facebook, picasa, deviantArt, etsy, flikr 
 
 	rows 			: 1 ,					// number of thumbs tall.  format: number
 	collumns 		: 6 ,					// number of thumbs wide.  format: number
@@ -44,23 +44,17 @@
 	limit: 100,			proxy: false,		date: false,		showerror: true,	errormsg: '',		ssl: '',	
 	};
  
-//=======================================================================
-//------------------Do not edit these variables--------------------------
-//=======================================================================	
+//============================================================================
+//-----------------------Do not edit these variables--------------------------
+//============================================================================	
 var settings, gallerySize, cellNumber, rowNumber, colNumber, listTitle, id;
-var currentGallery="albums", tableCount=0, currentTable=0, rowCount=0,currentImg=0; 
-var hashRefresh=false, lightboxCheck = false;		
-var hash, feeds, currentXml, xmlImages;
-var xmlMedia=new Array(); var xmlTitle= new Array();
-var entry, xmlType;
+var currentGallery="", tableCount=0, currentTable=0, rowCount=0,currentImg=0; 
+var hash, hashRefresh=false, lightboxCheck = false;		
+
 	
 	
-var	albumTitle;
-var	albumLink;
-var	thumbnailPath = new Array();
-var	imgPath= new Array();
-var	imgTitle= new Array();
-var	imgLink= new Array();
+var	albumTitle,	albumLink, thumbnailPath = new Array();
+var	imgPath= new Array(), imgTitle= new Array(), imgLink= new Array();
 	
 	
 	
@@ -92,10 +86,10 @@ settings=$.extend({},defaults,customVars[parseInt(albumIndex)]);
             if (settings.limit != null) api += "&num=" + settings.limit;
             api += "&output=json_xml"
 	
-	if(settings.network='facebook')
-		api= "https://graph.facebook.com/"+settings.path+"/photos?callback=?";
-	
-	
+	if(settings.network=='facebook')
+			api= "https://graph.facebook.com/"+settings.path+"/photos?callback=?";
+			
+			
     $.getJSON(api,  function(data){
        if (data.responseStatus == 200 || data.data != null) { // Check for error
 			switch(settings.network){
@@ -130,12 +124,10 @@ function changeBG(a){
 	$.history.load("id="+currentGallery+"&img="+a);
 	hashRefresh=true;
 
-	$('#pic').stop(true, true).fadeOut(400, function(){
+	
+	$('#pic, #imgLink, #imgTitleComments').stop(true, true).fadeOut(400, function(){
 		$('#pic').attr('src' ,  imgPath[a]);     
 		$('#pic').attr('class' , a);
-	}).delay(100).fadeIn(300);
-	
-	$('#imgLink').stop(true, true).fadeOut(400, function(){
 		$("#imgLink").html($("#cell"+a).attr("alt"));
 		$("#imgLink").attr("href", imgLink[a]);
 	}).delay(100).fadeIn(300);
@@ -279,24 +271,26 @@ function lightBox(check){
 
 function getFacebookData(albumIndex, data){
 		var api2= "https://graph.facebook.com/"+settings.path+"/photos?callback=?";
-	$.getJSON(api2, function(data) {
-		var facebookInfo = data.data;
-		albumLink="http://www.facebook.com/media/set/?set"+facebookInfo[0].link.split("set")[1];	
-		albumTitle=settings.title;
-		gallerySize=0;
-		for(i in facebookInfo){
-			imgPath[gallerySize]		=facebookInfo[gallerySize].source;
-			imgTitle[gallerySize] 	=facebookInfo[gallerySize].name;
-			if (imgTitle[gallerySize]== undefined) imgTitle[gallerySize]=gallerySize+".jpg";
-			imgLink[gallerySize] 		=facebookInfo[gallerySize].link;
-			thumbnailPath[gallerySize]=facebookInfo[gallerySize].picture; 
-			gallerySize++;
-		}	
-		getDisplay(albumIndex);
-	});
+		$.getJSON(api2, function(data) {
+			var facebookInfo = data.data;
+			albumLink="http://www.facebook.com/media/set/?set"+facebookInfo[0].link.split("set")[1];	
+			albumTitle=settings.title;
+			gallerySize=0;
+			for(i in facebookInfo){
+				imgPath[gallerySize]		=facebookInfo[gallerySize].source;
+				imgTitle[gallerySize] 	=facebookInfo[gallerySize].name;
+				if (imgTitle[gallerySize]== undefined)
+					imgTitle[gallerySize]=gallerySize+".jpg";
+				imgLink[gallerySize] 		=facebookInfo[gallerySize].link;
+				thumbnailPath[gallerySize]=facebookInfo[gallerySize].picture; 
+				gallerySize++;
+			}	
+			getDisplay(albumIndex);
+		});
 }
 
 function getPicasaData(data, albumIndex){	
+
 	albumTitle=data.responseData.feed.title;
 	albumLink=data.responseData.feed.link;	 
 	gallerySize=data.responseData.feed.entries.length;
@@ -319,7 +313,7 @@ function getDeviantData(){
 	
 	albumLink="www."+feeds.title.split(':')[2].split('/')[0]+".deviantart.com/gallery/"+feeds.title.split('/')[1];
 for(i=0; i<facebookInfo.length(); i++){
-			imgPath[i]= xmlImages[i].getElementsByTagName('content')[0].getAttribute("url");
+			//imgPath[i]= xmlImages[i].getElementsByTagName('content')[0].getAttribute("url");
 			imgTitle[i]=feeds.entries[i].title;
 			//imgLink[i] 		=facebookInfo[i].link;
 			//thumbnailPath[i]=facebookInfo[i].picture; 
@@ -367,7 +361,7 @@ function createGallery(albumIndex){
 		$("<div id='nextArrow' class='arrow'><a class='verticalCenter'><img src='images/Arrow-Right.png' onClick='nextIMG()' /></a></div>").appendTo("#imageDiv");
 
 	$("<div id='imgTitle'><a id='imgLink' href='"+imgLink[currentImg]+"' alt='"+imgTitle[currentImg]+"'></a></div>").appendTo("#"+settings.containerID);
-		$("<a href='"+imgLink[currentImg]+"'><img src='images/comments.png' height='25px' /></a>").appendTo("#imgTitle");
+		$("<a id='imgTitleComments' href='"+imgLink[currentImg]+"'><img src='images/comments.png' height='25px' /></a>").appendTo("#imgTitle");
 	$("<div id='thumbsContainer'></div>").appendTo("#"+settings.containerID);
 	if(imgPath.length>cellNumber){
 			$("<div id='prevThumbsArrow' class='arrow'><a class='verticalCenter'>"+
@@ -421,9 +415,9 @@ function createList(){
         $("<div id='albumTitle'></div>").appendTo("#"+settings.containerID);
     $("<ul id='galleryList' ></ul>").appendTo("#"+settings.containerID);
     for (var i=0; i<gallerySize > 0; i++) { // For Each Image
-        $("<li id='galleryListItem"+i+"' class='galleryListItem'></li>").appendTo("#galleryList");
+        $("<li id='galleryListItem"+i+"' class='galleryListItem' ></li>").appendTo("#galleryList");
             $("<a  id='galleryAlbumAnchor"+i+"' class='noDecoration' onClick='newGallery("+(i+1)+",false)'  >").appendTo("#galleryListItem"+i+"");
-				$("<span class='textFix' ></span>").appendTo("#galleryAlbumAnchor"+i+"");
+			//	$("<span class='textFix' ></span>").appendTo("#galleryAlbumAnchor"+i+"");
                 $("<img class='galleryAlbumImage' src='"+imgPath[i]+"'  />").appendTo("#galleryAlbumAnchor"+i+"");              
                 $("<h4 class='galleryAlbumText' >"+imgTitle[i]+"</h4>").appendTo("#galleryAlbumAnchor"+i+"");               
     }
@@ -460,9 +454,9 @@ function createShop(){
 function getEtsyData(i){
 	
 	imgLink[i] = feeds.entries[i].link;
-	xmlImages 	= currentXml.getElementsByTagName('item');
+	//xmlImages 	= currentXml.getElementsByTagName('item');
 	entry = feeds.entries[i];
-	thumbnailPath=currentXml.getElementsByTagName('item')[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+	//thumbnailPath=currentXml.getElementsByTagName('item')[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
 }
 
 
@@ -478,7 +472,13 @@ function newGallery(str, check){
 	rowCount=0;
 	hashRefresh=true;
 	lightboxCheck = false;
+	
+	
+	
+	imgPath= new Array();
+	imgTitle= new Array();
 	imgLink= new Array();
+	thumbnailPath = new Array();
 	
 	if(check)
 		str=0;	
